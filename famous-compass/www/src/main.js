@@ -18,7 +18,7 @@ define(function(require, exports, module) {
     }
 
     function onSuccess(heading) {
-        compassAngle = degToRad(heading.magneticHeading);
+        compassAngle = (compassAngle + degToRad(heading.magneticHeading)) / 2;
         console.log(compassAngle);
     };
 
