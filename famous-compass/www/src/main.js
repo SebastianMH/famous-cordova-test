@@ -5,21 +5,28 @@ define(function(require, exports, module) {
     var Transform = require('famous/core/Transform');
     var ImageSurface = require('famous/surfaces/ImageSurface');
     var Surface = require('famous/core/Surface');
+    var Transitionable = require('famous/transitions/Transitionable');
+    var Easing = require('famous/transitions/Easing');
 
-    // create the main context
     var mainContext = Engine.createContext();
 
     var PI = 3.14159265359;
-    var compassDelay = 100; //ms
+    var compassDelay = 1000 / 60; //ms
     var compassAngle = 0;
+    var transitonable = new Transitionable(0);
 
     function degToRad(degrees) {
         return degrees * PI / 180;
     }
 
     function onSuccess(heading) {
-        compassAngle = (compassAngle + degToRad(heading.magneticHeading)) / 2;
+        //compassAngle = (compassAngle + degToRad(heading.magneticHeading)) / 2;
+        compassAngle = degToRad(heading.magneticHeading);
         console.log(compassAngle);
+        transitonable.set(compassAngle, {
+            duration: compassDelay - 10,
+            curve: Easing.linear //Easing.inOutSine //Easing.linear //Easing.outBack
+        })
     };
 
     function onError(compassError) {
@@ -48,13 +55,13 @@ define(function(require, exports, module) {
     });
     var text = new Surface({
         size: [200, 200],
-        content: 'famous Cordova/PhoneGap Compass'
+        content: 'famous + cordova Compass'
     });
 
     var centerSpinModifier = new Modifier({
         origin: [0.5, 0.5],
         transform: function() {
-            return Transform.rotateZ(-compassAngle);
+            return Transform.rotateZ(-compassAngle); //transitonable.get());
         }
     });
 
