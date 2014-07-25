@@ -8,21 +8,39 @@ define(function(require, exports, module) {
 
     // create the main context
     var mainContext = Engine.createContext();
-    document.addEventListener("deviceready", onDeviceReady, false);
 
-    //http://plugins.cordova.io/#/package/org.apache.cordova.device
-    function onDeviceReady() {
-        console.log('===================================================');
-        console.log(device.uuid);
-        console.log('===================================================');
+    var PI = 3.14159265359;
+    var compassDelay = 100; //ms
+    var compassAngle = 0;
 
-        text.setContent(device.platform);
+    function degToRad(degrees) {
+        return degrees * PI / 180;
     }
 
-    // function rockOn() {
+    function onSuccess(heading) {
+        compassAngle = degToRad(heading.magneticHeading);
+        console.log(compassAngle);
+    };
 
-    // }
-    // your app here
+    function onError(compassError) {
+        alert('Compass error: ' + compassError.code);
+    };
+
+    var options = {
+        frequency: compassDelay
+    };
+
+    document.addEventListener("deviceready", onDeviceReady, false);
+
+    function onDeviceReady() {
+        console.log('===================================================');
+        console.log('===================================================');
+
+        //text.setContent(device.platform);
+        var watchID = navigator.compass.watchHeading(onSuccess, onError, options);
+
+    }
+
     var logo = new ImageSurface({
         size: [200, 200],
         content: 'http://code.famo.us/assets/famous_logo.svg',
@@ -30,19 +48,19 @@ define(function(require, exports, module) {
     });
     var text = new Surface({
         size: [200, 200],
-        content: 'none yet'
+        content: 'famous Cordova/PhoneGap Compass'
     });
 
-    var initialTime = Date.now();
     var centerSpinModifier = new Modifier({
         origin: [0.5, 0.5],
         transform: function() {
-            return Transform.rotateY(.002 * (Date.now() - initialTime));
+            return Transform.rotateZ(-compassAngle);
         }
     });
 
     var textModifier = new Modifier({
-        origin: [0.5, 0.5]
+        origin: [0.5, 0.0],
+        align: [0.5, 0.0]
     });
 
     mainContext.add(textModifier).add(text);
