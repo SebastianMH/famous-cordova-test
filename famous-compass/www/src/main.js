@@ -1,18 +1,18 @@
 define(function(require, exports, module) {
-    // import dependencies
+    var Easing = require('famous/transitions/Easing');
     var Engine = require('famous/core/Engine');
-    var Modifier = require('famous/core/Modifier');
-    var Transform = require('famous/core/Transform');
     var ImageSurface = require('famous/surfaces/ImageSurface');
+    var Modifier = require('famous/core/Modifier');
     var Surface = require('famous/core/Surface');
     var Transitionable = require('famous/transitions/Transitionable');
-    var Easing = require('famous/transitions/Easing');
+    var Transform = require('famous/core/Transform');
 
     var mainContext = Engine.createContext();
 
     var PI = 3.14159265359;
     var compassDelay = 1000 / 60; //ms
     var compassAngle = 0;
+
     var transitonable = new Transitionable(0);
 
     function degToRad(degrees) {
@@ -20,11 +20,12 @@ define(function(require, exports, module) {
     }
 
     function onSuccess(heading) {
+        var string = '<h3>famous + cordova Compass</h3>magnetic heading: ' + heading.magneticHeading + '<br>true heading: ' + heading.trueHeading + '<br>heading accuracy: ' + heading.headingAccuracy;
+        text.setContent(string);
         //compassAngle = (compassAngle + degToRad(heading.magneticHeading)) / 2;
-        compassAngle = degToRad(heading.magneticHeading);
-        console.log(compassAngle);
+        compassAngle = degToRad(heading.trueHeading);
         transitonable.set(compassAngle, {
-            duration: compassDelay - 10,
+            duration: compassDelay - 20,
             curve: Easing.linear //Easing.inOutSine //Easing.linear //Easing.outBack
         })
     };
@@ -40,12 +41,7 @@ define(function(require, exports, module) {
     document.addEventListener("deviceready", onDeviceReady, false);
 
     function onDeviceReady() {
-        console.log('===================================================');
-        console.log('===================================================');
-
-        //text.setContent(device.platform);
         var watchID = navigator.compass.watchHeading(onSuccess, onError, options);
-
     }
 
     var logo = new ImageSurface({
@@ -53,8 +49,9 @@ define(function(require, exports, module) {
         content: 'http://code.famo.us/assets/famous_logo.svg',
         classes: ['double-sided']
     });
+
     var text = new Surface({
-        size: [200, 200],
+        size: [300, 200],
         content: 'famous + cordova Compass'
     });
 
