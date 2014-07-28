@@ -25,8 +25,10 @@ define(function(require, exports, module) {
 
         if (heading.trueHeading != null) {
             compassAngle = degToRad(heading.trueHeading);
-        } else {
+        } else if (heading.magneticHeading != null) {
             compassAngle = degToRad(heading.magneticHeading);
+        } else {
+            compassAngle = 0;
         }
 
         transitonable.set(compassAngle, {
