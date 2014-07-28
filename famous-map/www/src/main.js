@@ -7,7 +7,7 @@ define(function(require, exports, module) {
     var Transitionable = require('famous/transitions/Transitionable');
     var Transform = require('famous/core/Transform');
 
-    var YOUR_API_KEY = 'your key goes here'
+    var YOUR_API_KEY = 'your key goes here';
     var mainContext = Engine.createContext();
 
     var PI = 3.14159265359;
