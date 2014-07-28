@@ -22,8 +22,13 @@ define(function(require, exports, module) {
     function onSuccess(heading) {
         var string = '<h3>famous + cordova compass</h3>magnetic heading: ' + heading.magneticHeading + '<br>true heading: ' + heading.trueHeading + '<br>heading accuracy: ' + heading.headingAccuracy;
         text.setContent(string);
-        //compassAngle = (compassAngle + degToRad(heading.magneticHeading)) / 2;
-        compassAngle = degToRad(heading.trueHeading);
+
+        if (heading.trueHeading != null) {
+            compassAngle = degToRad(heading.trueHeading);
+        } else {
+            compassAngle = degToRad(heading.magneticHeading);
+        }
+
         transitonable.set(compassAngle, {
             duration: compassDelay - 20,
             curve: Easing.linear //Easing.inOutSine //Easing.linear //Easing.outBack
