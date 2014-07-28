@@ -13,7 +13,7 @@ Cordova is also known as Phone Gap.
 * [Cordova Plugins](http://plugins.cordova.io/#/) based on which example you choose
   * test1 requires [device](http://plugins.cordova.io/#/package/org.apache.cordova.device)
   * famous-compass requires [device-orientation](http://plugins.cordova.io/#/package/org.apache.cordova.device-orientation)
-  * famous-map requires [geolocation](cordova plugin add org.apache.cordova.geolocation)
+  * famous-map requires [geolocation](cordova plugin add org.apache.cordova.geolocation) and a [maps api key](https://developers.google.com/maps/documentation/embed/guide#api_key)
 * Android or IOS dev kits
 
 
