@@ -10,8 +10,6 @@ define(function(require, exports, module) {
     var mainContext = Engine.createContext();
 
     var PI = 3.14159265359;
-    var compassDelay = 1000 / 60; //ms
-    var compassAngle = 0;
 
     var transitonable = new Transitionable(0);
 
@@ -19,29 +17,31 @@ define(function(require, exports, module) {
         return degrees * PI / 180;
     }
 
-    function onSuccess(heading) {
-        var string = '<h3>famous + cordova compass</h3>magnetic heading: ' + heading.magneticHeading + '<br>true heading: ' + heading.trueHeading + '<br>heading accuracy: ' + heading.headingAccuracy;
+    // onSuccess Callback
+    //   This method accepts a `Position` object, which contains
+    //   the current GPS coordinates
+    //
+    function onSuccess(position) {
+        var string = 'famous + cordova map<br/>Latitude: ' + position.coords.latitude + '<br/> ' +
+            'Longitude: ' + position.coords.longitude;
         text.setContent(string);
-        //compassAngle = (compassAngle + degToRad(heading.magneticHeading)) / 2;
-        compassAngle = degToRad(heading.trueHeading);
-        transitonable.set(compassAngle, {
-            duration: compassDelay - 20,
-            curve: Easing.linear //Easing.inOutSine //Easing.linear //Easing.outBack
-        })
-    };
+    }
 
-    function onError(compassError) {
-        alert('Compass error: ' + compassError.code);
-    };
+    // onError Callback receives a PositionError object
+    //
+    function onError(error) {
+        alert('code: ' + error.code + '\n ' + 'message: ' + error.message + '\n ');
+    }
 
-    var options = {
-        frequency: compassDelay
-    };
+    // Options: throw an error if no update is received every 30 seconds.
+    //
 
     document.addEventListener("deviceready", onDeviceReady, false);
 
     function onDeviceReady() {
-        var watchID = navigator.compass.watchHeading(onSuccess, onError, options);
+        var watchID = navigator.geolocation.watchPosition(onSuccess, onError, {
+            timeout: 30000
+        });
     }
 
     var logo = new ImageSurface({
@@ -52,14 +52,14 @@ define(function(require, exports, module) {
 
     var text = new Surface({
         size: [300, 200],
-        content: 'famous + cordova Compass'
+        content: 'famous + cordova map'
     });
 
     var centerSpinModifier = new Modifier({
-        origin: [0.5, 0.5],
-        transform: function() {
-            return Transform.rotateZ(-compassAngle); //transitonable.get());
-        }
+        origin: [0.5, 0.5]
+        // transform: function() {
+        //     return Transform.rotateZ(-compassAngle); //transitonable.get());
+        // }
     });
 
     var textModifier = new Modifier({
