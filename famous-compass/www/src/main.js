@@ -24,9 +24,9 @@ define(function(require, exports, module) {
         text.setContent(string);
 
         if (heading.trueHeading != null) {
-            compassAngle = degToRad(heading.trueHeading);
+            compassAngle = degToRad(heading.trueHeading + 90);
         } else if (heading.magneticHeading != null) {
-            compassAngle = degToRad(heading.magneticHeading);
+            compassAngle = degToRad(heading.magneticHeading + 90);
         } else {
             compassAngle = 0;
         }
