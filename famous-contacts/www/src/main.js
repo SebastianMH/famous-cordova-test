@@ -1,5 +1,4 @@
 define(function(require, exports, module) {
-    var Easing = require('famous/transitions/Easing');
     var Engine = require('famous/core/Engine');
     var ImageSurface = require('famous/surfaces/ImageSurface');
     var Modifier = require('famous/core/Modifier');
@@ -7,7 +6,6 @@ define(function(require, exports, module) {
     var StateModifier = require('famous/modifiers/StateModifier');
     var Surface = require('famous/core/Surface');
     var Transform = require('famous/core/Transform');
-    var Transitionable = require('famous/transitions/Transitionable');
     var ViewSequence = require('famous/core/ViewSequence');
 
     var mainContext = Engine.createContext();
@@ -39,29 +37,27 @@ define(function(require, exports, module) {
                     properties: {
                         padding: '20px',
                         color: 'white',
-                        backgroundColor: "hsl(" + (i * 360 / contacts.length) + ", 100%, 50%)",
+                        backgroundColor: 'hsl(' + (i * 360 / contacts.length) + ', 100%, 50%)',
                         boxShadow: '0 0 15px rgba(0, 0, 0, 0.5)'
                     }
                 });
                 surfaces.push(surface);
             }
         }
-    };
+    }
 
     function onContactError(contactError) {
         alert('onContactError! ' + contactError);
-    };
+    }
 
     function onDeviceReady() {
-        console.log('==  device is ready  ==');
-
         var options = new ContactFindOptions();
         options.multiple = true;
         var fields = [navigator.contacts.fieldType.displayName, navigator.contacts.fieldType.name];
         navigator.contacts.find(fields, onContactSuccess, onContactError, options);
     }
 
-    document.addEventListener("deviceready", onDeviceReady, false);
+    document.addEventListener('deviceready', onDeviceReady, false);
 
     var scrollview = new Scrollview({
         margin: 180
