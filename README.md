@@ -26,15 +26,17 @@ Cordova is also known as Phone Gap.
 
 ### Usage
 1. Create a cordova project
-2. Delete the "www" folder
-3. Copy one of the "www" folders from this repo into its spot
-4. Build the cordova project
+2. Rename the "www" folder to "www-old"
+3. Copy one of the "www" folders from this repo into your new cordova project
+4. Copy the "www-old/config.xml" file into "www/config.xml"
+5. Install necessary plugins
+5. Build the cordova project
 
 ### Differences Between Cordova and PhoneGap
 
 
 ### Notes
- * Some apps,such as famous-pictures, are still under construction.
+ * Some apps, such as famous-pictures, are still under construction
  * Please message me about any problems and fork/pull
 
 ### Debugging On An Android Device
@@ -42,6 +44,3 @@ Debugging code running on an Android device is done using adb,the Android Debugg
 `$ adb logcat` will start streaming usful info, including console.log print outs, to a console.
 
 ### Debugging On An IOS Device
-
-
-
