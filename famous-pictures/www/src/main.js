@@ -112,7 +112,7 @@ define(function(require, exports, module) {
 
     var text = new Surface({
         size: [300, 200],
-        content: 'famous + cordova + pictures'
+        content: 'famous + cordova + pictures<br/><h1>UNDER CONSTRUCTION</h1>'
     });
 
     // var initialTime = Date.now();
