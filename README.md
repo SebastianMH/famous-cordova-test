@@ -15,7 +15,7 @@ Cordova is also known as Phone Gap.
   * famous-compass requires the [device-orientation plug-in](http://plugins.cordova.io/#/package/org.apache.cordova.device-orientation)
   * famous-map requires the [geolocation plug-in](cordova plugin add org.apache.cordova.geolocation) and a [maps api key](https://developers.google.com/maps/documentation/embed/guide#api_key)
   * famous-pictures requires the [file plug-in](http://plugins.cordova.io/#/package/org.apache.cordova.file)
-  * famous-contacts requires the [contacts plug-in](http://plugins.cordova.io/#/package/org.apache.cordova.contacts) '''cordova plugin add org.apache.cordova.contacts'''
+  * famous-contacts requires the [contacts plug-in](http://plugins.cordova.io/#/package/org.apache.cordova.contacts) `cordova plugin add org.apache.cordova.contacts`
 * Android or IOS dev kits
 
 
@@ -26,6 +26,6 @@ Cordova is also known as Phone Gap.
 4. Build the cordova project
 
 ### Useful Console Commands
-'''$ cordova run android'''
-'''$ adb logcat'''
+`$ cordova run android`
+`$ adb logcat`
 
