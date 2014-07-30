@@ -30,6 +30,10 @@ Cordova is also known as Phone Gap.
 3. Copy one of the "www" folders from this repo into its spot
 4. Build the cordova project
 
+### Notes
+ * Some apps,such as famous-pictures, are still under construction.
+ * Please message me about any problems and fork/pull
+ 
 ### Useful Console Commands
 `$ cordova run android`
 `$ adb logcat`
