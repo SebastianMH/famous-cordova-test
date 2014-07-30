@@ -23,9 +23,45 @@ define(function(require, exports, module) {
 
     document.addEventListener("deviceready", onDeviceReady, false);
 
-    function onDeviceReady() {}
+    function onDeviceReady() {
+        console.log('========================device is readdddddddddddddyyyyyyyyyy');
+        navigator.camera.getPicture(onSuccess, onFail, {
+            sourceType: Camera.PictureSourceType.PHOTOLIBRARY,
+            destinationType: Camera.DestinationType.FILE_URI
+        });
+        console.log('===================================  Something');
+    }
 
     var surfaces = [];
+    //img = 'blank';
+
+    function onSuccess(imageURI) {
+        console.log('==============================making a img surface');
+        console.log('================================url is' + imageURI);
+        var i = 0;
+        console.log(imageURI);
+        while (i < 20) {
+            var imageSurface = new ImageSurface({
+                size: size,
+                content: imageURI,
+                properties: {
+                    textAlign: 'center',
+                    lineHeight: '100px',
+                    color: 'white',
+                    boxShadow: '0 0 15px rgba(0, 0, 0, 0.5)'
+                }
+            });
+
+            surfaces.push(imageSurface);
+            i = i + 1;
+        }
+        img = imageURI;
+    }
+
+    function onFail(message) {
+        alert('Failed because: ' + message);
+    }
+
     var scrollview = new Scrollview({
         margin: 180
     });
@@ -48,51 +84,51 @@ define(function(require, exports, module) {
 
     mainContext.add(centerModifier).add(scrollview);
 
-    for (var i = 0; i < 40; i++) {
-        var surface = new Surface({
-            size: size,
-            content: 'Surface ' + i,
-            properties: {
-                textAlign: 'center',
-                lineHeight: '100px',
-                color: 'white',
-                backgroundColor: "hsl(" + (i * 360 / 40) + ", 100%, 50%)",
-                boxShadow: '0 0 15px rgba(0, 0, 0, 0.5)'
-            }
-        });
+    // for (var i = 0; i < 20; i++) {
+    //     var surface = new ImageSurface({
+    //         size: size,
+    //         content: img,
+    //         properties: {
+    //             textAlign: 'center',
+    //             lineHeight: '100px',
+    //             color: 'white',
+    //             backgroundColor: "hsl(" + (i * 360 / 40) + ", 100%, 50%)",
+    //             boxShadow: '0 0 15px rgba(0, 0, 0, 0.5)'
+    //         }
+    //     });
 
-        surfaces.push(surface);
-    }
+    //     surfaces.push(surface);
+    // }
 
     scrollview.outputFrom(function(offset) {
         return Transform.moveThen([0, -50, 350], Transform.rotateX(-0.004 * offset));
     });
 
-    var logo = new ImageSurface({
-        size: [100, 100],
-        content: 'http://code.famo.us/assets/famous_logo.svg',
-        classes: ['double-sided']
-    });
+    // var logo = new ImageSurface({
+    //     size: [100, 100],
+    //     content: 'http://code.famo.us/assets/famous_logo.svg',
+    //     classes: ['double-sided']
+    // });
 
     var text = new Surface({
         size: [300, 200],
-        content: 'famous + cordova map'
+        content: 'famous + cordova + pictures'
     });
 
-    var initialTime = Date.now();
-    var centerSpinModifier = new Modifier({
-        origin: [0.5, 0.5],
-        align: [0.85, 0.1],
-        transform: function() {
-            return Transform.rotateY(.002 * (Date.now() - initialTime));
-        }
-    });
+    // var initialTime = Date.now();
+    // var centerSpinModifier = new Modifier({
+    //     origin: [0.5, 0.5],
+    //     align: [0.85, 0.1],
+    //     transform: function() {
+    //         return Transform.rotateY(.002 * (Date.now() - initialTime));
+    //     }
+    // });
 
     var textModifier = new Modifier({
-        origin: [0.5, 0.0],
-        align: [0.5, 0.0]
+        origin: [0.5, 0.5],
+        align: [0.5, 0.5]
     });
 
     mainContext.add(textModifier).add(text);
-    mainContext.add(centerSpinModifier).add(logo);
+    // mainContext.add(centerSpinModifier).add(logo);
 });

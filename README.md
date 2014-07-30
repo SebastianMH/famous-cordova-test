@@ -11,10 +11,11 @@ Cordova is also known as Phone Gap.
 * Famo.us
 * Cordova
 * [Cordova Plugins](http://plugins.cordova.io/#/) based on which example you choose
-  * test1 requires [device](http://plugins.cordova.io/#/package/org.apache.cordova.device)
-  * famous-compass requires [device-orientation](http://plugins.cordova.io/#/package/org.apache.cordova.device-orientation)
-  * famous-map requires [geolocation](cordova plugin add org.apache.cordova.geolocation) and a [maps api key](https://developers.google.com/maps/documentation/embed/guide#api_key)
-  * famous-pictures requires [camera](http://plugins.cordova.io/#/package/org.apache.cordova.camera)
+  * test1 requires the [device plug-in](http://plugins.cordova.io/#/package/org.apache.cordova.device)
+  * famous-compass requires the [device-orientation plug-in](http://plugins.cordova.io/#/package/org.apache.cordova.device-orientation)
+  * famous-map requires the [geolocation plug-in](cordova plugin add org.apache.cordova.geolocation) and a [maps api key](https://developers.google.com/maps/documentation/embed/guide#api_key)
+  * famous-pictures requires the [file plug-in](http://plugins.cordova.io/#/package/org.apache.cordova.file)
+  * famous-contacts requires the [contacts plug-in](http://plugins.cordova.io/#/package/org.apache.cordova.contacts) '''cordova plugin add org.apache.cordova.contacts'''
 * Android or IOS dev kits
 
 
@@ -23,3 +24,8 @@ Cordova is also known as Phone Gap.
 2. Delete the "www" folder
 3. Copy one of the "www" folders from this repo into its spot
 4. Build the cordova project
+
+### Useful Console Commands
+'''$ cordova run android'''
+'''$ adb logcat'''
+
