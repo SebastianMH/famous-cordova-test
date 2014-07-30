@@ -19,7 +19,7 @@ define(function(require, exports, module) {
         return degrees * PI / 180;
     }
 
-    function onSuccess(heading) {
+    function onCompassSuccess(heading) {
         var string = '<h3>famous + cordova compass</h3>magnetic heading: ' + heading.magneticHeading + '<br>true heading: ' + heading.trueHeading + '<br>heading accuracy: ' + heading.headingAccuracy;
         text.setContent(string);
 
@@ -33,23 +33,23 @@ define(function(require, exports, module) {
 
         transitonable.set(compassAngle, {
             duration: compassDelay - 20,
-            curve: Easing.linear //Easing.inOutSine //Easing.linear //Easing.outBack
-        })
-    };
+            curve: Easing.linear //Easing.inOutSine //Easing.outBack
+        });
+    }
 
-    function onError(compassError) {
+    function onCompassError(compassError) {
         alert('Compass error: ' + compassError.code);
-    };
+    }
 
     var options = {
         frequency: compassDelay
     };
 
-    document.addEventListener("deviceready", onDeviceReady, false);
-
     function onDeviceReady() {
-        var watchID = navigator.compass.watchHeading(onSuccess, onError, options);
+        var watchID = navigator.compass.watchHeading(onCompassSuccess, onCompassError, options);
     }
+
+    document.addEventListener('deviceready', onDeviceReady, false);
 
     var logo = new ImageSurface({
         size: [200, 200],
@@ -62,7 +62,7 @@ define(function(require, exports, module) {
         content: 'famous + cordova Compass'
     });
 
-    var centerSpinModifier = new Modifier({
+    var logoModifier = new Modifier({
         origin: [0.5, 0.5],
         transform: function() {
             return Transform.rotateZ(-compassAngle); //transitonable.get());
@@ -75,6 +75,6 @@ define(function(require, exports, module) {
     });
 
     mainContext.add(textModifier).add(text);
-    mainContext.add(centerSpinModifier).add(logo);
+    mainContext.add(logoModifier).add(logo);
 
 });
