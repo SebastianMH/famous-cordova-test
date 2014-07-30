@@ -30,11 +30,18 @@ Cordova is also known as Phone Gap.
 3. Copy one of the "www" folders from this repo into its spot
 4. Build the cordova project
 
+### Differences Between Cordova and PhoneGap
+
+
 ### Notes
  * Some apps,such as famous-pictures, are still under construction.
  * Please message me about any problems and fork/pull
- 
-### Useful Console Commands
-`$ cordova run android`
-`$ adb logcat`
+
+### Debugging On An Android Device
+Debugging code running on an Android device is done using adb,the Android Debugging Bridge.
+`$ adb logcat` will start streaming usful info, including console.log print outs, to a console.
+
+### Debugging On An IOS Device
+
+
 
