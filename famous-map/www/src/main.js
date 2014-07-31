@@ -3,8 +3,9 @@ define(function(require, exports, module) {
     var ImageSurface = require('famous/surfaces/ImageSurface');
     var Modifier = require('famous/core/Modifier');
     var Surface = require('famous/core/Surface');
+    var Transform = require('famous/core/Transform');
 
-    var YOUR_API_KEY = 'your api key goes here';
+    var YOUR_API_KEY = 'your API key';
     var mainContext = Engine.createContext();
 
     // onGeolocationSuccess Callback
@@ -12,18 +13,22 @@ define(function(require, exports, module) {
     //   the current GPS coordinates
     //
     function onGeolocationSuccess(position) {
-        var string = 'famous + cordova map' +
-            '<br/>Latitude: ' + position.coords.latitude +
+        var mapUrl =
+            'https://www.google.com/maps/embed/v1/place?q=' +
+            position.coords.latitude + '%2C' + position.coords.longitude +
+            '&key=' + YOUR_API_KEY;
+        var mapHtml =
+            '<div class="map"><iframe width="100%" height="100%" frameborder="0" src="' + mapUrl + '"></iframe></div>';
+        var string =
+            '<div class="text">Latitude: ' + position.coords.latitude +
             '<br/>Longitude: ' + position.coords.longitude +
             '<br/>Altitude: ' + position.coords.altitude +
             '<br/>Accuracy: ' + position.coords.accuracy +
             '<br/>Altitude Accuracy: ' + position.coords.altitudeAccuracy +
             '<br/>Heading: ' + position.coords.heading +
             '<br/>Speed: ' + position.coords.speed +
-            '<br/>Timestamp: ' + position.timestamp;
-        text.setContent(string);
-        var mapHtml = '<iframe width="300" height="300" frameborder="0" style="border:0" src="https://www.google.com/maps/embed/v1/place?q=' + position.coords.latitude + '%2C' + position.coords.longitude + '&key=' + YOUR_API_KEY + '"></iframe>';
-        map.setContent(mapHtml);
+            '<br/>Timestamp: ' + position.timestamp + '</div>';
+        container.setContent(mapHtml + string);
     }
 
     // onGeolocationError Callback receives a PositionError object
@@ -34,44 +39,34 @@ define(function(require, exports, module) {
     }
 
     function onDeviceReady() {
+        container.setContent('waiting for onGeolocationSuccess');
         navigator.geolocation.getCurrentPosition(onGeolocationSuccess, onGeolocationError);
     }
 
     document.addEventListener('deviceready', onDeviceReady, false);
 
-    var logo = new ImageSurface({
-        size: [200, 200],
-        content: 'http://code.famo.us/assets/famous_logo.svg',
-        classes: ['double-sided']
+    var title = new Surface({
+        size: [true, true],
+        content: 'Famo.us + Cordova Map',
+        classes: ['title']
     });
 
-    var text = new Surface({
-        size: [300, 200],
-        content: 'famous + cordova map'
+    var container = new Surface({
+        size: [350, 490],
+        content: 'waiting for onDeviceReady',
+        classes: ['container']
     });
 
-    var map = new Surface({
-        size: [300, 300],
-        content: 'waiting for position'
+    var titleModifier = new Modifier({
+        origin: [1.0, 1.0],
+        align: [1.0, 1.0]
+    });
+    var containerModifier = new Modifier({
+        origin: [0.5, 0],
+        align: [0.5, 0],
+        transform: Transform.translate(0, 15, 0)
     });
 
-    var logoModifier = new Modifier({
-        origin: [0.5, 0.5]
-        // transform: function() {
-        //     return Transform.rotateZ(-compassAngle); //transitonable.get());
-        // }
-    });
-
-    var textModifier = new Modifier({
-        origin: [0.5, 0.0],
-        align: [0.5, 0.0]
-    });
-    var mapModifier = new Modifier({
-        origin: [0.5, 1.0],
-        align: [0.5, 1.0]
-    });
-
-    mainContext.add(textModifier).add(text);
-    mainContext.add(mapModifier).add(map);
-    mainContext.add(logoModifier).add(logo);
+    mainContext.add(containerModifier).add(container);
+    mainContext.add(titleModifier).add(title);
 });
