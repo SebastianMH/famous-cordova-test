@@ -35,11 +35,9 @@ define(function(require, exports, module) {
                     size: size,
                     content: contactInfo,
                     properties: {
-                        padding: '20px',
-                        color: 'white',
                         backgroundColor: 'hsl(' + (i * 360 / contacts.length) + ', 100%, 50%)',
-                        boxShadow: '0 0 15px rgba(0, 0, 0, 0.5)'
-                    }
+                    },
+                    classes: ['contact-surface']
                 });
                 surfaces.push(surface);
             }
