@@ -41,12 +41,13 @@ The plug-in can be installed with ```$ cordova plugin add org.apache.cordova.fil
 1. Create a cordova project
 2. Rename the "www" folder to "www-old"
 3. Copy one of the "www" folders from this repo into your new cordova project
-4. Copy the "www-old/config.xml" file into "www/config.xml"
-5. Install necessary plugins
+4. If using PhoneGap, copy the "www-old/config.xml" file into "www/config.xml"
+5. If using cordova, install the necessary plugins
 5. Build the cordova project
 
 ### Differences Between Cordova and PhoneGap
-
+ * Cordova places the config.html in the project directory. PhoneGap places the config.html in the www folder.
+ * PhoneGap automatically has the basic plugins installed.
 
 ### Notes
  * Some apps, such as famous-pictures, are still under construction
